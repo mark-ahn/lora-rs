@@ -1,6 +1,6 @@
 [package]
 name = "lorawan-device"
-version = "0.12.2"
+version = "0.12.3-p001"
 authors = [
     "Louis Thiery <thiery.louis@gmail.com>",
     "Ulf Lilleengen <lulf@redhat.com>",
@@ -54,6 +54,7 @@ all-regions = [
     "region-eu868",
     "region-in865",
     "region-us915",
+    "region-kr920",
 ]
 
 ## Use pure Rust implementations of [`AES`](https://docs.rs/aes/latest/aes/) and [`CMAC`](https://docs.rs/cmac/latest/cmac/) for the LoRaWAN crypto layer.
@@ -101,3 +102,5 @@ region-eu868 = []
 region-in865 = []
 ## Enable support for US915 region (by default all regions are enabled).
 region-us915 = []
+## Enable support for KR920 region (by default all regions are enabled).
+region-kr920 = []

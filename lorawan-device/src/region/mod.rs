@@ -22,7 +22,8 @@ pub use lorawan::types::DR;
     feature = "region-eu868",
     feature = "region-in865",
     feature = "region-au915",
-    feature = "region-us915"
+    feature = "region-us915",
+    feature = "region-kr920"
 )))]
 compile_error!("You must enable at least one region! eg: `region-eu868`, `region-us915`...");
 
@@ -33,7 +34,8 @@ compile_error!("You must enable at least one region! eg: `region-eu868`, `region
     feature = "region-as923-4",
     feature = "region-eu433",
     feature = "region-eu868",
-    feature = "region-in865"
+    feature = "region-in865",
+    feature = "region-kr920"
 ))]
 mod dynamic_channel_plans;
 #[cfg(feature = "region-as923-1")]
@@ -50,6 +52,8 @@ pub(crate) use dynamic_channel_plans::EU433;
 pub(crate) use dynamic_channel_plans::EU868;
 #[cfg(feature = "region-in865")]
 pub(crate) use dynamic_channel_plans::IN865;
+#[cfg(feature = "region-kr920")]
+pub(crate) use dynamic_channel_plans::KR920;
 
 #[cfg(any(feature = "region-us915", feature = "region-au915"))]
 mod fixed_channel_plans;
@@ -114,6 +118,8 @@ pub enum Region {
     EU433,
     #[cfg(feature = "region-in865")]
     IN865,
+    #[cfg(feature = "region-kr920")]
+    KR920,
     #[cfg(feature = "region-us915")]
     US915,
 }
@@ -136,6 +142,8 @@ enum State {
     EU433(EU433),
     #[cfg(feature = "region-in865")]
     IN865(IN865),
+    #[cfg(feature = "region-kr920")]
+    KR920(KR920),
     #[cfg(feature = "region-us915")]
     US915(US915),
 }
@@ -159,6 +167,8 @@ impl State {
             Region::EU433 => State::EU433(EU433::new_eu433()),
             #[cfg(feature = "region-in865")]
             Region::IN865 => State::IN865(IN865::new_in865()),
+            #[cfg(feature = "region-kr920")]
+            Region::KR920 => State::KR920(KR920::new_kr920()),
             #[cfg(feature = "region-us915")]
             Region::US915 => State::US915(US915::default()),
         }
@@ -183,6 +193,8 @@ impl State {
             Self::EU868(_) => Region::EU868,
             #[cfg(feature = "region-in865")]
             Self::IN865(_) => Region::IN865,
+            #[cfg(feature = "region-kr920")]
+            Self::KR920(_) => Region::KR920,
             #[cfg(feature = "region-us915")]
             Self::US915(_) => Region::US915,
         }
@@ -217,6 +229,8 @@ macro_rules! mut_region_dispatch {
         State::EU433(state) => state.$t(),
         #[cfg(feature = "region-in865")]
         State::IN865(state) => state.$t(),
+        #[cfg(feature = "region-kr920")]
+        State::KR920(state) => state.$t(),
         #[cfg(feature = "region-us915")]
         State::US915(state) => state.0.$t(),
     }
@@ -239,6 +253,8 @@ macro_rules! mut_region_dispatch {
         State::EU433(state) => state.$t($($arg)*),
         #[cfg(feature = "region-in865")]
         State::IN865(state) => state.$t($($arg)*),
+        #[cfg(feature = "region-kr920")]
+        State::KR920(state) => state.$t($($arg)*),
         #[cfg(feature = "region-us915")]
         State::US915(state) => state.0.$t($($arg)*),
     }
@@ -264,6 +280,8 @@ macro_rules! region_dispatch {
         State::EU433(state) => state.$t(),
         #[cfg(feature = "region-in865")]
         State::IN865(state) => state.$t(),
+        #[cfg(feature = "region-kr920")]
+        State::KR920(state) => state.$t(),
         #[cfg(feature = "region-us915")]
         State::US915(state) => state.0.$t(),
     }
@@ -286,6 +304,8 @@ macro_rules! region_dispatch {
         State::EU433(state) => state.$t($($arg)*),
         #[cfg(feature = "region-in865")]
         State::IN865(state) => state.$t($($arg)*),
+        #[cfg(feature = "region-kr920")]
+        State::KR920(state) => state.$t($($arg)*),
         #[cfg(feature = "region-us915")]
         State::US915(state) => state.0.$t($($arg)*),
     }
@@ -311,6 +331,8 @@ macro_rules! region_static_dispatch {
         State::EU433(_) => dynamic_channel_plans::EU433::$t(),
         #[cfg(feature = "region-in865")]
         State::IN865(_) => dynamic_channel_plans::IN865::$t(),
+        #[cfg(feature = "region-kr920")]
+        State::KR920(_) => dynamic_channel_plans::KR920::$t(),
         #[cfg(feature = "region-us915")]
         State::US915(_) => fixed_channel_plans::US915::$t(),
     }
@@ -333,6 +355,8 @@ macro_rules! region_static_dispatch {
         State::EU433(_) => dynamic_channel_plans::EU433::$t($($arg)*),
         #[cfg(feature = "region-in865")]
         State::IN865(_) => dynamic_channel_plans::IN865::$t($($arg)*),
+        #[cfg(feature = "region-kr920")]
+        State::KR920(_) => dynamic_channel_plans::KR920::$t($($arg)*),
         #[cfg(feature = "region-us915")]
         State::US915(_) => fixed_channel_plans::US915::$t($($arg)*),
     }
@@ -521,6 +545,8 @@ from_region!(AS923_3);
 from_region!(AS923_4);
 #[cfg(feature = "region-in865")]
 from_region!(IN865);
+#[cfg(feature = "region-kr920")]
+from_region!(KR920);
 #[cfg(feature = "region-au915")]
 from_region!(AU915);
 #[cfg(feature = "region-eu868")]

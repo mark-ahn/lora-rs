@@ -15,6 +15,8 @@ mod eu433;
 mod eu868;
 #[cfg(feature = "region-in865")]
 mod in865;
+#[cfg(feature = "region-kr920")]
+mod kr920;
 
 #[cfg(feature = "region-as923-1")]
 pub(crate) use as923::AS923_1;
@@ -30,6 +32,8 @@ pub(crate) use eu433::EU433;
 pub(crate) use eu868::EU868;
 #[cfg(feature = "region-in865")]
 pub(crate) use in865::IN865;
+#[cfg(feature = "region-kr920")]
+pub(crate) use kr920::KR920;
 
 #[derive(Clone, Copy)]
 pub(crate) struct Channel {
